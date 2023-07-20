@@ -1,0 +1,110 @@
+@use './variables' as *;
+
+// SCSS for following components
+// AuthPage.tsx
+// AuthForm.tsx
+
+// AUTH PAGE SCSS
+
+.modalContainer {
+  width: 100dvw;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  background-color: $authBackground;
+
+  transition: $transitionTime ease-in-out all;
+  .wrapper {
+    max-width: 500px;
+  }
+}
+
+.modalAuth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $white;
+  padding: 5rem;
+  border-radius: 7px;
+  footer {
+    margin-top: 2rem;
+  }
+}
+
+.modalAuthHeader {
+  text-align: center;
+  margin-bottom: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    max-width: 150px;
+    margin-bottom: 2.4rem;
+  }
+
+  p {
+    color: $timeStamp;
+    margin-top: 1.5rem;
+  }
+}
+
+.authForm {
+  width: 100%;
+}
+.authInputContainer {
+  width: inherit;
+  margin: 2.4rem 0;
+}
+.authInput {
+  display: flex;
+  input {
+    flex-grow: 1;
+    height: 3rem;
+    border-radius: 5px;
+    border: 2px solid $chatScreenBorder;
+    background-color: $inputBG;
+  }
+}
+
+.authBtn {
+  width: 100%;
+  height: 5rem;
+  margin: 2.5rem 0;
+  border: transparent;
+
+  font-size: $ftHeading;
+  color: $white;
+  background-color: $mainPurple;
+}
+
+.authSwitchBtn {
+  background-color: transparent;
+  color: $mainPurple;
+  font-weight: 500;
+
+  &:hover {
+    background-color: transparent;
+    color: $mainPurpleHover;
+  }
+}
+
+.authErrorContainer {
+  height: 2.4rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  p {
+    color: $notificationBG;
+  }
+}
+
+.authErrorIcon {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  svg {
+    fill: $notificationBG;
+  }
+}

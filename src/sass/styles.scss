@@ -1,0 +1,9 @@
+@use './partials/setup';
+@use './partials/variables' as *;
+@use './partials/global';
+
+// components
+@use './partials/auth';
+@use './partials/sidebarNav';
+@use './partials/tabContent';
+@use './partials/msg';

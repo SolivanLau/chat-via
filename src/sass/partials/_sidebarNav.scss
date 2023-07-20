@@ -1,0 +1,99 @@
+@use './variables' as *;
+// sidebar layout
+
+.sidebarNav {
+  width: 75px;
+  svg {
+    fill: $sidebarMenuIcon;
+    transition: $transitionTime ease-in-out all;
+  }
+  box-shadow: rgba(15, 34, 58, 0.12) 0px 2px 4px 0px;
+}
+// layout
+.featuresList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  height: inherit;
+  padding: 2rem 1rem;
+}
+
+// Feature Icons
+.featuresItem {
+  transition: $transitionTime ease-in-out all;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-radius: $roundRadius;
+  &:hover {
+    cursor: pointer;
+    background-color: $authBackground;
+    svg {
+      fill: $mainPurple;
+    }
+    .iconPopup {
+      opacity: 1;
+      transform: translate(-50%, -200%);
+    }
+  }
+}
+
+.featuresItem:first-child {
+  margin-bottom: auto;
+}
+.featuresItem:nth-child(7) {
+  margin-top: auto;
+  &:hover {
+    .iconPopup {
+      opacity: 1;
+      transform: translate(-50%, -175%);
+    }
+  }
+}
+
+.featuresItem:last-child {
+  &:hover {
+    background-color: transparent;
+  }
+}
+.sidebarIconContainer {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.iconPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -125%);
+  display: block;
+  width: 65px;
+  background-color: $msgTextColor;
+  color: $white;
+  text-align: center;
+  font-size: $ftMessageName;
+  padding: 0.5rem;
+  border-radius: $roundRadius;
+  margin: 0 auto;
+  opacity: 0;
+
+  transition: 0.3s ease-in-out all;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 95%;
+    left: 45%;
+    rotate: 180deg;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-bottom: 5px solid $msgTextColor;
+  }
+}
