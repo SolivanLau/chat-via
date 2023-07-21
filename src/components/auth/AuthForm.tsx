@@ -1,9 +1,15 @@
 import { FormEvent, useState } from 'react';
-import { RiErrorWarningLine } from 'react-icons/ri';
 import { useSignIn, useSignUp } from '../../firebase/authHooks';
+import { useNavigate } from 'react-router-dom';
 import AuthInput from './AuthInput';
-import { redirect, useNavigate } from 'react-router-dom';
+import {
+  RiErrorWarningLine,
+  RiLock2Line,
+  RiMailLine,
+  RiContactsLine,
+} from 'react-icons/ri';
 
+// INTERFACE
 interface AuthFormProps {
   isSignIn: boolean;
 }
@@ -35,7 +41,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
   // LOADING STATE
   const [loading, setisLoading] = useState(false);
 
-  // handle form sign in OR signUp
+  // HANDLE FORM SIGN UP/SIGN IN
   const handleSubmit = async (e: FormEvent) => {
     // prevent default
     e.preventDefault();
@@ -43,19 +49,23 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
     // deconstruct user credentials
     const { email, password, userName } = userCred;
 
+    // loading state ON
     setisLoading(true);
 
+    // try request
     try {
       if (isSignIn) {
         await useSignIn(email, password);
       } else {
         await useSignUp(userName, email, password);
       }
+      // ON SUCCESS
       setisLoading(false);
       setError({ error: false, message: null });
       console.log('signed in - redirecting');
       navigate('/');
     } catch (error: any) {
+      // ON FAILURE
       setisLoading(false);
       const msg = error.message;
       setError({ error: true, message: msg });
@@ -71,6 +81,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
           setUserCred={setUserCred}
           inputName="email"
           inputValue={userCred.email}
+          labelIcon={<RiMailLine />}
         />
         {/* userName */}
         {!isSignIn && (
@@ -79,6 +90,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
             setUserCred={setUserCred}
             inputName="userName"
             inputValue={userCred.userName}
+            labelIcon={<RiContactsLine />}
           />
         )}
         {/* password */}
@@ -87,6 +99,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
           setUserCred={setUserCred}
           inputName="password"
           inputValue={userCred.password}
+          labelIcon={<RiLock2Line />}
+          isPassword={true}
         />
         {/* button to submit */}
         <button type="submit" className="authBtn">

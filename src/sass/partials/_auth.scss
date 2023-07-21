@@ -54,18 +54,47 @@
 .authInputContainer {
   width: inherit;
   margin: 2.4rem 0;
+  height: 4.5rem;
+}
+.authInputLabel {
+  font-size: $ftMessageName;
+  margin-bottom: 0.5rem;
 }
 .authInput {
   display: flex;
+  height: 4.5rem;
   input {
     flex-grow: 1;
-    height: 3rem;
-    border-radius: 5px;
-    border: 2px solid $chatScreenBorder;
-    background-color: $inputBG;
+    height: inherit;
+    border: 1px solid $chatScreenBorder;
+    background-color: $white;
+    color: $msgTextColor;
   }
 }
 
+.authInputIcon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  padding: 1.3rem;
+  background-color: $msgBubbleBG;
+  border: 1px solid $chatScreenBorder;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+
+  svg {
+    fill: $timeStamp;
+  }
+}
+
+.authInputIconPassword {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  &:hover {
+    background-color: #e4e2ff;
+  }
+}
 .authBtn {
   width: 100%;
   height: 5rem;

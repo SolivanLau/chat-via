@@ -15,11 +15,13 @@ import ProfileIcon from '../tabContent/ProfileIcon';
 import { useLogout } from '../../firebase/authHooks';
 
 const SidebarNav = () => {
+  const [activeTab, setActiveTab] = useState('profile');
   const [isLightMode, setIsLightMode] = useState(false);
 
   const handleLogout = () => {
     useLogout();
   };
+
   return (
     <nav className="sidebar sidebarNav">
       <ul className="featuresList">
@@ -29,20 +31,45 @@ const SidebarNav = () => {
           </div>
         </li>
         <li className="featuresItem">
-          <SidebarIcon icon={<RiUserLine />} popup="Profile" />
+          <SidebarIcon
+            icon={<RiUserLine />}
+            popup="profile"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </li>
         <li className="featuresItem">
-          <SidebarIcon icon={<RiMessage3Line />} popup="Chats" />
+          <SidebarIcon
+            icon={<RiMessage3Line />}
+            popup="chats"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </li>
 
         <li className="featuresItem">
-          <SidebarIcon icon={<RiGroupLine />} popup="Groups" />
+          <SidebarIcon
+            icon={<RiGroupLine />}
+            popup="groups"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </li>
         <li className="featuresItem">
-          <SidebarIcon icon={<RiContactsLine />} popup="Contacts" />
+          <SidebarIcon
+            icon={<RiContactsLine />}
+            popup="contacts"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </li>
         <li className="featuresItem">
-          <SidebarIcon icon={<RiSettings3Line />} popup="Settings" />
+          <SidebarIcon
+            icon={<RiSettings3Line />}
+            popup="settings"
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </li>
 
         <li
@@ -51,7 +78,9 @@ const SidebarNav = () => {
         >
           <SidebarIcon
             icon={isLightMode ? <RiSunLine /> : <RiMoonLine />}
-            popup={isLightMode ? `Light mode` : `Dark mode`}
+            popup={`dark mode`}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
           />
         </li>
         <li className="featuresItem" onClick={handleLogout}>

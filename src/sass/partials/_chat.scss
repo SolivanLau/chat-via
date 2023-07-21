@@ -1,0 +1,31 @@
+@use './variables' as *;
+.chatContainer {
+  background-color: $white;
+  flex-grow: 1;
+
+  padding: 2.4rem;
+  overflow-y: scroll;
+}
+
+// CHAT MESSAGE
+.chatItem {
+  padding: 2.4rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chatItemReceiving {
+  display: flex;
+  justify-content: flex-start;
+
+  color: $white;
+  .chatMsg {
+    background-color: $mainPurple;
+  }
+}
+.chatMsg {
+  width: fit-content;
+  padding: 1.4rem;
+  background-color: $inputBG;
+  border-radius: $roundRadius;
+}

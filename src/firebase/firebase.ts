@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
+import { getDatabase, ref } from 'firebase/database';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,3 +24,4 @@ export const auth = getAuth(app);
 
 // Init Firebase DB
 export const db = getDatabase(app);
+export const dbRef = ref(db);

@@ -395,17 +395,46 @@ button:hover {
 .authInputContainer {
   width: inherit;
   margin: 2.4rem 0;
+  height: 4.5rem;
+}
+
+.authInputLabel {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .authInput {
   display: flex;
+  height: 4.5rem;
 }
 .authInput input {
   flex-grow: 1;
-  height: 3rem;
-  border-radius: 5px;
-  border: 2px solid #f0eff5;
-  background-color: #e6ebf5;
+  height: inherit;
+  border: 1px solid #f0eff5;
+  background-color: #fff;
+  color: #343a40;
+}
+
+.authInputIcon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  padding: 1.3rem;
+  background-color: #f5f7fb;
+  border: 1px solid #f0eff5;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.authInputIcon svg {
+  fill: #7a7f9a;
+}
+
+.authInputIconPassword {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.authInputIconPassword:hover {
+  background-color: #e4e2ff;
 }
 
 .authBtn {
@@ -475,16 +504,20 @@ button:hover {
   height: 50px;
   border-radius: 7px;
 }
-.featuresItem:hover {
-  cursor: pointer;
-  background-color: #f7f7ff;
+.featuresItem button {
+  width: inherit;
+  height: inherit;
+  background-color: transparent;
 }
-.featuresItem:hover svg {
-  fill: #7269ef;
-}
-.featuresItem:hover .iconPopup {
+.featuresItem button:hover .iconPopup {
   opacity: 1;
   transform: translate(-50%, -200%);
+}
+.featuresItem .sidebarIconActive {
+  background-color: #f7f7ff;
+}
+.featuresItem .sidebarIconActive svg {
+  fill: #7269ef;
 }
 
 .featuresItem:first-child {
@@ -597,6 +630,7 @@ button:hover {
 
 .msgHeader {
   justify-content: space-between;
+  border-bottom: 1px solid #f0eff5;
 }
 .msgHeader .msgBtn {
   padding: 1.5rem;
@@ -700,4 +734,33 @@ button:hover {
 }
 .msgSendBtn:hover {
   background-color: #544bce;
+}
+
+.chatContainer {
+  background-color: #fff;
+  flex-grow: 1;
+  padding: 2.4rem;
+  overflow-y: scroll;
+}
+
+.chatItem {
+  padding: 2.4rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chatItemReceiving {
+  display: flex;
+  justify-content: flex-start;
+  color: #fff;
+}
+.chatItemReceiving .chatMsg {
+  background-color: #7269ef;
+}
+
+.chatMsg {
+  width: fit-content;
+  padding: 1.4rem;
+  background-color: #e6ebf5;
+  border-radius: 7px;
 }

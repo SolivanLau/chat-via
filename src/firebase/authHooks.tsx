@@ -1,12 +1,14 @@
+import { auth, db } from './firebase';
+import { ref, set } from 'firebase/database';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { auth } from './firebase';
 
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../state/stateHooks';
 
 const errorMsgArr = [
   {
@@ -34,6 +36,28 @@ const generateErrMsg = (err: any) => {
   return errObj ? errObj.message : 'Unexpected error... Please try again later';
 };
 
+export const useCreateUser = async (
+  name: string,
+  email: string,
+  uid: string
+) => {
+  try {
+    // Create a new unique key for the user
+    const userRef = ref(db, `/users/${uid}`);
+    const newUser = {
+      email,
+      name,
+    };
+
+    // Set the user object at the newly created key
+    set(userRef, newUser);
+    console.log('User created successfully:', newUser);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
+  }
+};
+
 export const useSignUp = async (
   userName: string,
   email: string,
@@ -45,8 +69,9 @@ export const useSignUp = async (
       email,
       password
     );
-    const user = userCred.user;
-    console.log(user);
+    const { uid } = userCred.user;
+
+    await useCreateUser(userName, email, uid);
   } catch (error: any) {
     throw new Error(generateErrMsg(error));
   }
@@ -72,6 +97,7 @@ export const useLogout = async () => {
 
 export const observeAuth = () => {
   const navigate = useNavigate();
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log('user signed in! :)');

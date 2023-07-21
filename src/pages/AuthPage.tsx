@@ -1,6 +1,6 @@
 import AuthForm from '../components/auth/AuthForm';
 import { useState } from 'react';
-import chatviaLogo from '../assets/logo-light.png';
+import chatviaLogo from '../assets/logo-dark.png';
 const AuthPage = () => {
   // AUTH MODE: SIGN IN OR SIGN UP
   const [isSignin, setIsSignin] = useState(true);

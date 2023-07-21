@@ -1,20 +1,30 @@
+// REACT LIBRARIES
 import { FC, FormEvent, useState } from 'react';
+// CUSTOM HOOKS
+import { useSendMsg } from '../../firebase/dbHooks';
+import { useAppSelector } from '../../state/stateHooks';
+// COMPONENTS
+import MsgBtn from './MsgBtn';
+// ASSETS
 import {
   RiSendPlane2Fill,
   RiImageFill,
   RiEmojiStickerLine,
   RiFileAddLine,
 } from 'react-icons/ri';
-import MsgBtn from './MsgBtn';
 
 interface MsgFormProps {}
+
 const MsgForm: FC<MsgFormProps> = ({}) => {
+  const authState = useAppSelector((state) => state.auth);
   // MSG TEXT INPUT
   const [msg, setMsg] = useState('');
   // FORM SUBMIT HANDLER
   const handleSubmit = (e: FormEvent) => {
+    // prevent default
     e.preventDefault();
-    console.log(msg);
+    useSendMsg(msg);
+    setMsg('');
   };
   return (
     <form onSubmit={handleSubmit} className="msgForm">
