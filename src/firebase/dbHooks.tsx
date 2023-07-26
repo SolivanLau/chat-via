@@ -1,11 +1,12 @@
 import { onValue, push, ref, get } from 'firebase/database';
 import { db } from './firebase';
 
+// GENERATE TIMESTAMP
 const getCurrentDateWithTimezone = () => {
   const currentDate = new Date();
 
   const year = currentDate.getFullYear();
-  const month = currentDate.getMonth() + 1; // Months are zero-based, so we add 1
+  const month = currentDate.getMonth() + 1; // adjust 0 based months
   const day = currentDate.getDate();
   const hour = currentDate.getHours();
   const minute = currentDate.getMinutes();
@@ -36,6 +37,7 @@ const getCurrentDateWithTimezone = () => {
   return currentDateWithTimezone;
 };
 
+// CREATE CHAT WITH USER
 export const useCreateChat = async () => {};
 
 export const useSendMsg = async (message: string, sentBy?: string) => {
@@ -43,15 +45,11 @@ export const useSendMsg = async (message: string, sentBy?: string) => {
 
   const chatObj = {
     message,
-    // sentBy,
+    sentBy,
     timeStamp: getCurrentDateWithTimezone(),
   };
 
   push(chatRef, chatObj);
-};
-
-export const getChatLog = (setState: (data: []) => void) => {
-  const chatRef = ref(db, '/chatTest');
 };
 
 export const getUserDBInfo = async (uid: string) => {
@@ -72,4 +70,19 @@ export const getUserDBInfo = async (uid: string) => {
   } catch (error) {
     console.log('Data not found in the database.');
   }
+};
+
+export const watchUserDBInfo = () => {
+  const usersRef = ref(db, '/users');
+
+  onValue(usersRef, (snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      console.log(data);
+
+      return data;
+    } else {
+      throw new Error('no data at current reference point');
+    }
+  });
 };

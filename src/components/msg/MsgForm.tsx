@@ -23,7 +23,7 @@ const MsgForm: FC<MsgFormProps> = ({}) => {
   const handleSubmit = (e: FormEvent) => {
     // prevent default
     e.preventDefault();
-    useSendMsg(msg);
+    useSendMsg(msg, authState.uid);
     setMsg('');
   };
   return (

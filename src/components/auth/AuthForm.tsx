@@ -8,6 +8,8 @@ import {
   RiMailLine,
   RiContactsLine,
 } from 'react-icons/ri';
+import { useAppDispatch } from '../../state/stateHooks';
+import { setUserInfo } from '../../state/authSlice';
 
 // INTERFACE
 interface AuthFormProps {
@@ -22,6 +24,7 @@ export interface userCredentials {
 
 const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   // CONTROLLED INPUT STATE
   const [userCred, setUserCred] = useState<userCredentials>({
     email: '',
@@ -41,6 +44,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
   // LOADING STATE
   const [loading, setisLoading] = useState(false);
 
+  const [userState, setUserState] = useState({});
+
   // HANDLE FORM SIGN UP/SIGN IN
   const handleSubmit = async (e: FormEvent) => {
     // prevent default
@@ -52,12 +57,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
     // loading state ON
     setisLoading(true);
 
-    // try request
     try {
       if (isSignIn) {
-        await useSignIn(email, password);
+        const res = await useSignIn(email, password);
+        dispatch(setUserInfo(res));
       } else {
-        await useSignUp(userName, email, password);
+        const res = await useSignUp(userName, email, password);
+        dispatch(setUserInfo(res));
       }
       // ON SUCCESS
       setisLoading(false);

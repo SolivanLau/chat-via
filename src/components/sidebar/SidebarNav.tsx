@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { LogoMain } from '../../assets/Svgs';
 import {
   RiContactsLine,
@@ -14,8 +14,11 @@ import SidebarIcon from './SidebarIcon';
 import ProfileIcon from '../tabContent/ProfileIcon';
 import { useLogout } from '../../firebase/authHooks';
 
-const SidebarNav = () => {
-  const [activeTab, setActiveTab] = useState('profile');
+interface SidebarNavProps {
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+}
+const SidebarNav: FC<SidebarNavProps> = ({ activeTab, setActiveTab }) => {
   const [isLightMode, setIsLightMode] = useState(false);
 
   const handleLogout = () => {

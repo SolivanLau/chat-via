@@ -2,9 +2,24 @@ import { useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase';
 import { onValue, ref } from 'firebase/database';
 import ChatMsg from './ChatMsg';
+import { useAppSelector } from '../../state/stateHooks';
+export interface dbChatMsg {
+  message: string;
+  sentBy: string;
+  timeStamp: {
+    day: number;
+    hour: number;
+    minute: number;
+    month: number;
+    year: number;
+    timezone: string;
+  };
+}
 
 const ChatContainer = () => {
   const [chatLog, setChatLog] = useState([]);
+
+  const { uid } = useAppSelector((state) => state.auth);
 
   const chatRef = ref(db, '/chatTest');
 
@@ -25,9 +40,15 @@ const ChatContainer = () => {
 
   return (
     <ul className="chatContainer">
-      {chatLog.map((msg) => {
-        const { message } = msg;
-        return <ChatMsg isReceivingMsg={false} message={message} />;
+      {chatLog.map((msg: dbChatMsg) => {
+        const { message, sentBy, timeStamp } = msg;
+        return (
+          <ChatMsg
+            isReceivingMsg={sentBy === uid ? false : true}
+            message={message}
+            timeStamp={timeStamp}
+          />
+        );
       })}
     </ul>
   );

@@ -743,24 +743,74 @@ button:hover {
   overflow-y: scroll;
 }
 
-.chatItem {
+.chatItemSending,
+.chatItemReceiving {
   padding: 2.4rem 0;
   display: flex;
   justify-content: flex-end;
 }
 
 .chatItemReceiving {
-  display: flex;
   justify-content: flex-start;
-  color: #fff;
-}
-.chatItemReceiving .chatMsg {
-  background-color: #7269ef;
 }
 
-.chatMsg {
+.chatMsgSending,
+.chatMsgReceiving {
   width: fit-content;
+  min-width: 10rem;
   padding: 1.4rem;
+  position: relative;
+}
+.chatMsgSending::after,
+.chatMsgReceiving::after {
+  content: "";
+  position: absolute;
+  border: 10px solid transparent;
+  border-top-color: #e6ebf5;
+  border-bottom: 0;
+  bottom: -8px;
+}
+
+.timeStamp {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+.timeStamp svg {
+  width: 1rem;
+}
+
+.chatMsgSending {
   background-color: #e6ebf5;
   border-radius: 7px;
+}
+.chatMsgSending::after {
+  border-right: 0;
+  right: 20px;
+}
+.chatMsgSending .timeStamp {
+  color: #7a7f9a;
+}
+.chatMsgSending .timeStamp svg {
+  fill: #7a7f9a;
+}
+
+.chatMsgReceiving {
+  background-color: #7269ef;
+  border-radius: 7px;
+  color: #fff;
+}
+.chatMsgReceiving::after {
+  border-left: 0;
+  border-top-color: #7269ef;
+  left: 20px;
+}
+.chatMsgReceiving .timeStamp {
+  justify-content: flex-end;
+  color: rgba(255, 255, 255, 0.5019607843) 255, 255, 255;
+}
+.chatMsgReceiving .timeStamp svg {
+  fill: rgba(255, 255, 255, 0.5019607843) 255, 255, 255;
 }

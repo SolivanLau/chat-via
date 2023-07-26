@@ -1,14 +1,13 @@
 import { auth, db } from './firebase';
-import { ref, set } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../state/stateHooks';
+import { getUserDBInfo } from './dbHooks';
 
 const errorMsgArr = [
   {
@@ -70,8 +69,9 @@ export const useSignUp = async (
       password
     );
     const { uid } = userCred.user;
+    useCreateUser(userName, email, uid);
 
-    await useCreateUser(userName, email, uid);
+    return getUserDBInfo(uid);
   } catch (error: any) {
     throw new Error(generateErrMsg(error));
   }
@@ -80,8 +80,9 @@ export const useSignUp = async (
 export const useSignIn = async (email: string, password: string) => {
   try {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCred.user;
-    console.log(user);
+    const { uid } = userCred.user;
+
+    return getUserDBInfo(uid);
   } catch (error: any) {
     throw new Error(generateErrMsg(error));
   }

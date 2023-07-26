@@ -3,7 +3,7 @@ import { FC, ReactElement } from 'react';
 interface MsgBtnProps {
   icon: ReactElement;
   isSubmit: boolean;
-  popup?: string;
+  popup?: string | ReactElement;
   isPopupBelow?: boolean;
   additionalClass?: string;
   trigger?: () => void;

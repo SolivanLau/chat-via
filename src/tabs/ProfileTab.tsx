@@ -1,14 +1,15 @@
 import { RiMore2Fill } from 'react-icons/ri';
+import { useAppSelector } from '../state/stateHooks';
+import ProfileIcon from '../components/tabContent/ProfileIcon';
 import { BsDot } from 'react-icons/bs';
-import tempAvatar from '../../assets/avatar-7.jpg';
-import ProfileIcon from './ProfileIcon';
-import { useAppSelector } from '../../state/stateHooks';
+import tempAvatar from '../assets/avatar-7.jpg';
+
 const ProfileTab = () => {
   const { email, name } = useAppSelector((state) => state.auth);
 
   return (
     <>
-      <div className="profileTab">
+      <section className="profileTab">
         {/* TAB HEADER */}
         <header className="tabHeader">
           <div className="tabWrapper">
@@ -24,7 +25,7 @@ const ProfileTab = () => {
           <div className="tabWrapper">
             <h2>{name}</h2>
             <div className="profileActiveStatus">
-              <div className="avtiveIconContainer">
+              <div className="activeIconContainer">
                 <BsDot />
               </div>
               <p>Active</p>
@@ -41,7 +42,7 @@ const ProfileTab = () => {
             </p>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

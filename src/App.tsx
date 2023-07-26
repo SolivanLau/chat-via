@@ -5,31 +5,26 @@ import { useNavigate } from 'react-router-dom';
 // FB
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebase';
-import { useAppDispatch } from './state/stateHooks';
-import { getUserDBInfo } from './firebase/dbHooks';
-import { setUserInfo } from './state/authSlice';
 
 const App: FC = () => {
-  // observeAuth();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const authObserve = () => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log('user signed in! :)');
-        setUserProfile(user);
-      } else {
+      if (!user) {
         console.log('user not signed in :(');
         navigate('/auth');
+      } else {
+        console.log('user signed in! :)');
+        // setUserProfile(user);
       }
     });
   };
 
-  const setUserProfile = async (user: any) => {
-    const userProfile = await getUserDBInfo(user.uid);
-    dispatch(setUserInfo(userProfile));
-  };
+  // const setUserProfile = (user: any) => {
+  //   const userProfile = getUserDBInfo(user.uid);
+  //   dispatch(setUserInfo(userProfile));
+  // };
 
   useEffect(() => {
     authObserve();
