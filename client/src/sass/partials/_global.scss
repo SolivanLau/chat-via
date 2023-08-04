@@ -1,0 +1,119 @@
+@use './variables' as *;
+
+html {
+  font-size: 62.5%; // 1rem === 10px
+  font-family: 'Public Sans', sans-serif;
+}
+body {
+  font-size: $ftBody;
+  color: $msgTextColor;
+}
+// STRIP STYLES
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+input {
+  border: transparent;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+// STANDARD TEXT STYLES
+h1 {
+  font-size: $ftHeading;
+}
+
+p,
+input,
+label {
+  font-size: $ftBody;
+}
+// STANDARD SVG IMG STYLE
+svg {
+  height: 100%;
+  width: 100%;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+// STANDARD HR STYLE
+
+// CUSTOM WRAPPER CLASS
+.wrapper {
+  width: 85%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+// CUSTOM SIDEBAR CLASS
+.sidebar {
+  height: 100dvh;
+}
+
+.profileIconContainer {
+  width: 100%;
+  img {
+    border-radius: 50%;
+    border: 1px solid $chatScreenBorder;
+    object-fit: contain;
+  }
+}
+// DEFAULT BTN STYLES
+button {
+  border: transparent;
+  border-radius: 7px;
+  transition: 0.3s ease-in-out all;
+  &:hover {
+    cursor: pointer;
+    background-color: $mainPurpleHover;
+  }
+}
+
+.iconBtn {
+  background-color: transparent;
+  svg {
+    fill: $sidebarMenuIcon;
+  }
+  &:hover {
+    background-color: transparent;
+  }
+}
+// STANDARD LAYOUT
+.msgPage {
+  display: flex;
+  height: 100dvh;
+  width: 100dvw;
+}
+
+// SCROLLBAR
+.customScrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 $timeStampAlt;
+  border-radius: 10px;
+}
+.customScrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  width: 5px;
+}
+
+.customScrollbar::-webkit-scrollbar-track {
+  background-color: $timeStampAlt;
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: $sidebarMenuIcon;
+}

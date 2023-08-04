@@ -1,0 +1,65 @@
+@use './variables' as *;
+
+// adjusting general sidebar class
+.tabContainer {
+  width: 380px;
+  background-color: $msgBubbleBG;
+}
+
+.tabHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabItem {
+  padding: 2.4rem;
+}
+// PROFILE TAB
+.profileTab {
+  h2 {
+    font-size: 16px;
+  }
+}
+
+.tabContainer {
+  .profileIconContainer {
+    width: 9.6rem;
+    margin: 0 auto;
+  }
+}
+
+.profileInfo {
+  text-align: center;
+  border-bottom: 1px solid $chatScreenBorder;
+}
+.profileActiveStatus {
+  display: flex;
+  justify-content: center;
+  margin: 0.4rem 0 2.4rem;
+}
+
+.profileBio {
+  margin: 2.4rem 0;
+}
+
+// CONTACT TAB
+.chatsTab {
+  display: flex;
+  flex-direction: column;
+}
+.contactsList {
+  height: 100%;
+  max-height: calc(100dvh - 7.56rem);
+  overflow-y: scroll;
+}
+.contactLetter {
+  color: $mainPurple;
+  margin: 2.4rem 0;
+}
+
+.contactName {
+  margin-left: 1rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: $ftMessageName;
+}
