@@ -3,8 +3,8 @@ import { FC, ReactElement } from 'react';
 interface SidebarIconProps {
   icon: ReactElement;
   popup: string;
-  activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  activeTab?: string;
+  setActiveTab?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SidebarIcon: FC<SidebarIconProps> = ({
@@ -15,7 +15,9 @@ const SidebarIcon: FC<SidebarIconProps> = ({
 }) => {
   return (
     <button
-      onClick={() => setActiveTab(popup)}
+      onClick={() => {
+        setActiveTab ? setActiveTab(popup) : null;
+      }}
       className={activeTab === popup ? 'sidebarIconActive' : ''}
     >
       <div className="sidebarIconContainer">{icon}</div>

@@ -8,8 +8,6 @@ import {
   RiMailLine,
   RiContactsLine,
 } from 'react-icons/ri';
-import { useAppDispatch } from '../../state/stateHooks';
-import { setUserInfo } from '../../state/authSlice';
 
 // INTERFACE
 interface AuthFormProps {
@@ -24,7 +22,6 @@ export interface userCredentials {
 
 const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   // CONTROLLED INPUT STATE
   const [userCred, setUserCred] = useState<userCredentials>({
     email: '',
@@ -59,16 +56,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
 
     try {
       if (isSignIn) {
-        const res = await useSignIn(email, password);
-        dispatch(setUserInfo(res));
+        await useSignIn(email, password);
       } else {
-        const res = await useSignUp(userName, email, password);
-        dispatch(setUserInfo(res));
+        await useSignUp(userName, email, password);
       }
       // ON SUCCESS
       setisLoading(false);
       setError({ error: false, message: null });
-      console.log('signed in - redirecting');
+      // console.log('signed in - redirecting');
       navigate('/');
     } catch (error: any) {
       // ON FAILURE

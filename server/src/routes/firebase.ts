@@ -1,7 +1,8 @@
 import express from 'express';
+import { getUsers } from '../controllers/firebase.js';
 
 const router = express.Router();
 
-router.route('/signup').get();
+router.route('/users/:id').get(getUsers);
 
 export default router;

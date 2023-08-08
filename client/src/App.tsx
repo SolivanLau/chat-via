@@ -1,37 +1,20 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 // REACT ROUTER
-import Routing from './components/Routing';
-import { useNavigate } from 'react-router-dom';
 // FB
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase/firebase';
-import { getUserDBInfo } from './firebase/dbHooks';
-import { setUserInfo } from './state/authSlice';
-import { useAppDispatch } from './state/stateHooks';
+
+import { AppRouter } from './components/Routing';
+import { useObserveAuth } from './firebase/authHooks';
 
 const App: FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const { isLoading } = useObserveAuth();
 
-  const checkUser = async (uid: string) => {
-    const res = await getUserDBInfo(uid);
-    dispatch(setUserInfo(res));
-  };
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        console.log('user not signed in :(');
-        navigate('/auth');
-      } else {
-        console.log('user signed in! :)');
-        checkUser(user.uid);
-      }
-    });
-  }, []);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>
-      <Routing />
+      <AppRouter />
     </>
   );
 };

@@ -1,7 +1,8 @@
 import * as admin from 'firebase-admin';
+// import serviceAccount from '../adminCredentials.json' assert { type: 'json' };
 import serviceAccount from '../adminCredentials.json';
 
-const account = {
+const adminCredentials = {
   type: serviceAccount.type,
   projectId: serviceAccount.project_id,
   privateKeyId: serviceAccount.private_key_id,
@@ -15,7 +16,7 @@ const account = {
 };
 
 admin.initializeApp({
-  credential: admin.credential.cert(account),
+  credential: admin.credential.cert(adminCredentials),
 });
 
 export default admin;
@@ -25,4 +26,3 @@ export default admin;
 // CHECK THE FOLLOWING
 // check if token is valid
 // who sent the request
-//

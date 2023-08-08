@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { LogoMain } from '../../assets/Svgs';
 import {
   RiContactsLine,
@@ -13,16 +13,24 @@ import tempAvatar from '../../assets/avatar-7.jpg';
 import SidebarIcon from './SidebarIcon';
 import ProfileIcon from '../tabContent/ProfileIcon';
 import { useLogout } from '../../firebase/authHooks';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
+import { useAppDispatch } from '../../state/stateHooks';
+import { clearUserInfo } from '../../state/authSlice';
 
 interface SidebarNavProps {
   activeTab: string;
   setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }
 const SidebarNav: FC<SidebarNavProps> = ({ activeTab, setActiveTab }) => {
+  const dispatch = useAppDispatch();
+
   const [isLightMode, setIsLightMode] = useState(false);
 
   const handleLogout = () => {
     useLogout();
+    dispatch(clearUserInfo());
   };
 
   return (
@@ -82,8 +90,6 @@ const SidebarNav: FC<SidebarNavProps> = ({ activeTab, setActiveTab }) => {
           <SidebarIcon
             icon={isLightMode ? <RiSunLine /> : <RiMoonLine />}
             popup={`dark mode`}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
           />
         </li>
         <li className="featuresItem" onClick={handleLogout}>
