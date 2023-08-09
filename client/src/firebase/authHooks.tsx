@@ -13,8 +13,8 @@ import {
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../state/stateHooks';
 import { UserInfo, setUserInfo } from '../state/authSlice';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { authRequest } from '../axios';
+import { GroupedContacts, UserData } from '../tabs/ContactsTab';
 
 // ERROR MESSAGE HANDLER
 const errorMsgArr = [
@@ -45,24 +45,24 @@ const generateErrMsg = (err: any) => {
 };
 
 // SIGN UP HOOK
+
 export const useSignUp = async (
   userName: string,
   email: string,
   password: string
 ) => {
   try {
-    // Step 1: Create user with email and password
-    const userCredentials = await createUserWithEmailAndPassword(
-      auth,
+    // Make the POST request to create a user
+    const response = await authRequest.post('/users', {
+      userName,
       email,
-      password
-    );
-
-    // Step 2: Update user's display name
-    await updateProfile(userCredentials.user, {
-      displayName: userName,
+      password,
     });
-  } catch (error: any) {
+
+    if (response) {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+  } catch (error) {
     throw new Error(generateErrMsg(error));
   }
 };
@@ -75,20 +75,60 @@ export const useSignIn = async (email: string, password: string) => {
     throw new Error(generateErrMsg(error));
   }
 };
+
+export const useGetUsers = (token: string | null, uid: string | null) => {
+  const [isLoadingContacts, setIsLoadingContacts] = useState(true);
+  const [contactData, setContactData] = useState<GroupedContacts>({});
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (token) {
+        authRequest.defaults.headers['Authorization'] = `Bearer ${token}`;
+        try {
+          const { data } = await authRequest.get('/users');
+          if (data) {
+            const dataArray = data.details.filter(
+              (contact: UserData) => contact.uid !== uid
+            );
+
+            const groupContacts: GroupedContacts = dataArray
+              .sort((a: UserData, b: UserData) =>
+                a.userName.localeCompare(b.userName)
+              )
+              .reduce((acc: any, contact: UserData) => {
+                const firstLetter = contact.userName.charAt(0).toUpperCase();
+
+                // if first letter is NOT already in acc {}
+                if (!acc[firstLetter]) {
+                  // create a new key with firstLetter and array with contact info
+                  acc[firstLetter] = [contact];
+                } else {
+                  // push contact into pre-existing firstLetter array
+                  acc[firstLetter].push(contact);
+                }
+                return acc;
+              }, {} as { [key: string]: UserData[] });
+            setContactData(groupContacts);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        } finally {
+          setIsLoadingContacts(false);
+        }
+      }
+    };
+
+    fetchUsers();
+  }, [token]);
+
+  return { isLoadingContacts, contactData };
+};
+
 // LOG OUT
 export const useLogout = async () => {
   const auth = getAuth();
   try {
     await signOut(auth);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getToken = async (user: User) => {
-  try {
-    const token: string = await getIdToken(user);
-    return token;
   } catch (error) {
     console.log(error);
   }
@@ -118,36 +158,10 @@ export const useObserveAuth = () => {
           token: token,
         };
         dispatch(setUserInfo(userObj));
-        console.log(token);
       }
-
       setIsLoading(false);
     });
   }, [authState]);
 
   return { isLoading };
-};
-
-// TOKEN REQUEST
-// DB CREATE USER
-export const useCreateUser = async (
-  name: string,
-  email: string,
-  uid: string
-) => {
-  try {
-    // Create a new unique key for the user
-    const userRef = ref(db, `/users/${uid}`);
-    const newUser = {
-      email,
-      name,
-    };
-
-    // Set the user object at the newly created key
-    set(userRef, newUser);
-    console.log('User created successfully:', newUser);
-  } catch (error) {
-    console.error('Error creating user:', error);
-    throw error;
-  }
 };

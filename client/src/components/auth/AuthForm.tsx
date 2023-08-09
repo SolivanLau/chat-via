@@ -21,6 +21,7 @@ export interface userCredentials {
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
+  // ROUTER DOM NAVIGATE
   const navigate = useNavigate();
   // CONTROLLED INPUT STATE
   const [userCred, setUserCred] = useState<userCredentials>({
@@ -40,8 +41,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
 
   // LOADING STATE
   const [loading, setisLoading] = useState(false);
-
-  const [userState, setUserState] = useState({});
 
   // HANDLE FORM SIGN UP/SIGN IN
   const handleSubmit = async (e: FormEvent) => {
@@ -63,7 +62,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
       // ON SUCCESS
       setisLoading(false);
       setError({ error: false, message: null });
-      // console.log('signed in - redirecting');
+      console.log('signed in - redirecting');
       navigate('/');
     } catch (error: any) {
       // ON FAILURE
@@ -75,6 +74,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignIn }) => {
 
   return (
     <>
+      {/* FORM */}
       <form onSubmit={handleSubmit} className="authForm">
         {/* email */}
         <AuthInput

@@ -7,30 +7,38 @@ export const authValidation = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { authtoken } = req.headers;
+  const authHeader = req.headers.authorization;
 
-  // verify request with proper authToken
-  if (typeof authtoken === 'string') {
-    // verify via firebase
-    try {
-      const verify = await admin.auth().verifyIdToken(authtoken);
-      // unauthorized error
-      if (!verify) {
-        throw new CustomApiError('not authorized to use this route', 403);
+  // verify request with Bearer authToken
+  if (typeof authHeader === 'string') {
+    const [scheme, token] = authHeader.split(' ');
+
+    if (scheme === 'Bearer') {
+      // verify via firebase
+      try {
+        const verify = await admin.auth().verifyIdToken(token);
+        // unauthorized error
+        if (!verify) {
+          throw new CustomApiError('not authorized to use this route', 403);
+        }
+        // authorized to move to endpoint function
+        next();
+      } catch (error: any) {
+        // ERROR: Firebase id token verification FAILED
+        throw new CustomApiError(
+          'not authorized - token verification failed',
+          403,
+          error.code as Record<string, any>
+        );
       }
-      // authorized to move to endpoint function
-      next();
-    } catch (error: any) {
-      // ERROR: Firebase id token verification FAILED
-      throw new CustomApiError(
-        'id token verification failed - not authorized',
-        403,
-        error as Record<string, any>
-      );
+    } else {
+      // ERROR: Client side token submission FAILED
+
+      throw new CustomApiError('invalid token', 401);
     }
   } else {
     // ERROR: Client side token submission FAILED
 
-    throw new CustomApiError('token not valid', 401);
+    throw new CustomApiError('invalid token', 401);
   }
 };

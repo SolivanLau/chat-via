@@ -30,10 +30,7 @@ export const AppRouter = () => {
         <Route path="/auth" element={<AuthPage />} />
         {/* PRIVATE ROUTES */}
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<MsgPage />}>
-            {/* <Route path="/profile" element={} />
-            <Route path="/profile" element={} /> */}
-          </Route>
+          <Route path="/" element={<MsgPage />} />
         </Route>
       </Routes>
     </>
