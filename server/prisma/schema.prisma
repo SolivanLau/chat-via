@@ -9,3 +9,31 @@ datasource db {
   provider = "mysql"
   url      = env("DB_URL")
 }
+
+model user {
+  uid      String @id
+  userName String
+  email    String @unique
+}
+
+model chat {
+  chatId   String @id
+  chatName String
+}
+
+model chatMember {
+  memberId String @id
+  // composite key formed by unique user/chat relationship
+  uid      String
+  chatId   String
+}
+
+model chatMessage {
+  msgId    String   @id
+  msgText  String
+  sentDate DateTime
+  // sentFrom
+  fromUid  String
+  // belongs to which chat
+  chatId   String
+}

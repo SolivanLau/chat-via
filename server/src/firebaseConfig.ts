@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 // import serviceAccount from '../adminCredentials.json' assert { type: 'json' };
-import serviceAccount from '../adminCredentials.json';
+import serviceAccount from './adminCredentials.json';
 
 const adminCredentials = {
   type: serviceAccount.type,
